@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import ProductsList from './products/ProductsList';
 
 const Home = () => {
   const [products, setProducts] = useState([]);
@@ -11,14 +12,16 @@ const Home = () => {
     const fetchAllProducts = async () => {
       try {
         const response = await axios.get('http://127.0.0.1:8000/api/products/');
-        console.log(response.data);
+        setProducts(response.data.data);
+        setColors(response.data.colors);
+        setSizes(response.data.sizes);
       } catch (error) {
         console.log(error);
       }
     };
     fetchAllProducts();
   }, []);
-  return <div>Home</div>;
+  return <ProductsList products={products} />;
 };
 
 export default Home;
