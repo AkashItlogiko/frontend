@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import ProductsList from './products/ProductsList';
+import { axiosRequest } from '../helpers/config';
 
 const Home = () => {
   const [products, setProducts] = useState([]);
@@ -11,7 +11,7 @@ const Home = () => {
   useEffect(() => {
     const fetchAllProducts = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/products/');
+        const response = await axiosRequest.get('/products/');
         setProducts(response.data.data);
         setColors(response.data.colors);
         setSizes(response.data.sizes);
