@@ -66,7 +66,7 @@ const Home = () => {
                 >
                   All Colors
                 </option>
-                {colors.map(color => (
+                {colors?.map(color => (
                   <option
                     value={color.id} 
                     key={color.id}>
