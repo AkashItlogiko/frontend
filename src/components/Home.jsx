@@ -33,7 +33,7 @@ const Home = () => {
         const response = await axiosRequest.get('products');
         setProducts(response.data.data);
         setColors(response.data.data);
-        setSizes(response.data);
+        setSizes(response.data.data);
       } catch (error) {
         console.log(error);
       }
