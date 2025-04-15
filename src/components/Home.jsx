@@ -44,7 +44,7 @@ const Home = () => {
 
         setColors(uniqueColors);
         setSizes(response.data.sizes);
-        console.log('Unique Sizes:', response.data.data.sizes);
+         
       } catch (error) {
         console.log(error);
       }
@@ -98,7 +98,7 @@ const Home = () => {
                   >
                     <option
                       value=""
-                      // disabled={!selectedSize}
+                      disabled={!selectedSize}
                       onClick={clearFilters}
                     >
                       All Sizes
