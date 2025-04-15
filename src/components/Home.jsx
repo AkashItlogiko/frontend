@@ -81,7 +81,9 @@ const Home = () => {
 
               <div className="col-md-4 mb-2">
                 <div className="mb-2">
-                  <span className="fw-bold">Filter by size:</span>
+                  <span className="fw-bold">Filter by size:
+
+                  </span>
                 </div>
                 <select
                   name="size_id"
@@ -110,6 +112,20 @@ const Home = () => {
                   })}
                 </select>
               </div>
+              <div className="col-md-4 mb-2">
+                <div className="mb-2">
+                  <span className="fw-bold">
+                    Search:
+                  </span>
+                </div>
+                <form className='d-flex'>
+                  <input type="search" className='form-control me-2' 
+                  value={searchTerm} disabled={selectedColor || selectedSize}
+                  onChange={(e)=>setSearchTerm(e.target.value)}
+                  placeholder='Search....'
+                  />
+                </form>
+                </div>
             </div>
           </div>
         </div>
