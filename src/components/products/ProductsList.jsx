@@ -20,7 +20,7 @@ const ProductsList = ({ products }) => {
         productsToShow<products?.length &&  
       
         <div className='d-flex justify-content-center my-3'>
-              <button className="btn btn-sm btn-dark" onDoubleClick={()=>lodeMoreProducts()}>
+              <button className="btn btn-sm btn-dark" onClick={()=>lodeMoreProducts()}>
               
                 <i className='bi bi-arrow-clockwise'></i>{' '}
                 Load More
