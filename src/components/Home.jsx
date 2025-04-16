@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import ProductsList from './products/ProductsList';
 import { axiosRequest } from '../helpers/config';
+import { useDebounce } from 'use-debounce';
+import Alert from './layouts/Alert';
 const Home = () => {
   const [products, setProducts] = useState([]);
   const [colors, setColors] = useState([]);
@@ -11,6 +13,7 @@ const Home = () => {
   const [selectedSize, setSelectedSize] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [message, setMessage] = useState('');
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
   const handleColorSelectBox = e => {
     setSelectedSize('');
@@ -29,6 +32,7 @@ const Home = () => {
 
   useEffect(() => {
     const fetachProducts = async () => {
+      setMessage('');
       try {
         if (selectedColor) {
           const response = await axiosRequest.get(
@@ -37,16 +41,14 @@ const Home = () => {
           setProducts(response.data.data);
           setColors(response.data.data);
           setSizes(response.data.data);
-        }
-        else if (selectedSize) {
+        } else if (selectedSize) {
           const response = await axiosRequest.get(
             `products/${selectedSize}/size`
           );
           setProducts(response.data.data);
           setColors(response.data.data);
           setSizes(response.data.data);
-        }
-        else if (searchTerm != '') {
+        } else if (debouncedSearchTerm[0] != '') {
           const response = await axiosRequest.get(
             `products/${searchTerm}/find`
           );
@@ -72,7 +74,7 @@ const Home = () => {
       }
     };
     fetachProducts();
-  }, [selectedColor, selectedSize, searchTerm]);
+  }, [selectedColor, selectedSize, debouncedSearchTerm[0]]);
 
   return (
     <div className="row my-5">
@@ -161,8 +163,8 @@ const Home = () => {
             </div>
           </div>
         </div>
-        {message && products?.length === 0 ? (
-          <div className="alert alert-info">{message}</div>
+        {message ? (
+          <Alert type="primary" content="No Products Found" />
         ) : (
           <ProductsList products={products} />
         )}
