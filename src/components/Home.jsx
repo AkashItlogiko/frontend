@@ -4,6 +4,7 @@ import ProductsList from './products/ProductsList';
 import { axiosRequest } from '../helpers/config';
 import { useDebounce } from 'use-debounce';
 import Alert from './layouts/Alert';
+import Spinner from './layouts/Spinner';
 const Home = () => {
   const [products, setProducts] = useState([]);
   const [colors, setColors] = useState([]);
@@ -33,6 +34,7 @@ const Home = () => {
   useEffect(() => {
     const fetachProducts = async () => {
       setMessage('');
+      setLoading(true);
       try {
         if (selectedColor) {
           const response = await axiosRequest.get(
@@ -41,6 +43,7 @@ const Home = () => {
           setProducts(response.data.data);
           setColors(response.data.data);
           setSizes(response.data.data);
+          setLoading(false);
         } else if (selectedSize) {
           const response = await axiosRequest.get(
             `products/${selectedSize}/size`
@@ -48,6 +51,7 @@ const Home = () => {
           setProducts(response.data.data);
           setColors(response.data.data);
           setSizes(response.data.data);
+          setLoading(false);
         } else if (debouncedSearchTerm[0] != '') {
           const response = await axiosRequest.get(
             `products/${searchTerm}/find`
@@ -56,11 +60,13 @@ const Home = () => {
             setProducts(response.data.data);
             setColors(response.data.data);
             setSizes(response.data.data);
+            setLoading(false);
           } else {
             setMessage('No products found');
             setProducts(response.data.data);
             setColors(response.data.data);
             setSizes(response.data.data);
+            setLoading(false);
           }
         } else {
           const response = await axiosRequest.get('products');
@@ -68,9 +74,11 @@ const Home = () => {
           setProducts(response.data.data);
           setColors(response.data.data);
           setSizes(response.data.data);
+          setLoading(false);
         }
       } catch (error) {
         console.log(error);
+        setLoading(false);
       }
     };
     fetachProducts();
@@ -165,9 +173,12 @@ const Home = () => {
         </div>
         {message ? (
           <Alert type="primary" content="No Products Found" />
-        ) : (
+        ) : 
+        loading
+        ?
+        <Spinner/>:
           <ProductsList products={products} />
-        )}
+        }
       </div>
     </div>
   );
