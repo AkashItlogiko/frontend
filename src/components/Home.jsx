@@ -13,14 +13,14 @@ const Home = () => {
   const [message, setMessage] = useState('');
 
   const handleColorSelectBox = e => {
-    setSelectedSize('e.target.value');
-    setSearchTerm('');
-    setSelectedColor();
-  };
-  const handleSizeSelectBox = e => {
     setSelectedSize('');
     setSearchTerm('');
     setSelectedColor(e.target.value);
+  };
+  const handleSizeSelectBox = e => {
+    setSelectedColor('');
+    setSearchTerm('');
+    setSelectedSize(e.target.value);
   };
   const clearFilters = () => {
     setSelectedColor('');
@@ -30,16 +30,49 @@ const Home = () => {
   useEffect(() => {
     const fetachProducts = async () => {
       try {
-        const response = await axiosRequest.get('products');
-        setProducts(response.data.data);
-        setColors(response.data.data);
-        setSizes(response.data.data);
+        if (selectedColor) {
+          const response = await axiosRequest.get(
+            `products/${selectedColor}/color`
+          );
+          setProducts(response.data.data);
+          setColors(response.data.data);
+          setSizes(response.data.data);
+        }
+        else if (selectedSize) {
+          const response = await axiosRequest.get(
+            `products/${selectedSize}/size`
+          );
+          setProducts(response.data.data);
+          setColors(response.data.data);
+          setSizes(response.data.data);
+        }
+        else if (searchTerm != '') {
+          const response = await axiosRequest.get(
+            `products/${searchTerm}/find`
+          );
+          if (response.data.data.length > 0) {
+            setProducts(response.data.data);
+            setColors(response.data.data);
+            setSizes(response.data.data);
+          } else {
+            setMessage('No products found');
+            setProducts(response.data.data);
+            setColors(response.data.data);
+            setSizes(response.data.data);
+          }
+        } else {
+          const response = await axiosRequest.get('products');
+          console.log('blog executed !!!');
+          setProducts(response.data.data);
+          setColors(response.data.data);
+          setSizes(response.data.data);
+        }
       } catch (error) {
         console.log(error);
       }
     };
     fetachProducts();
-  }, []);
+  }, [selectedColor, selectedSize, searchTerm]);
 
   return (
     <div className="row my-5">
@@ -81,9 +114,7 @@ const Home = () => {
 
               <div className="col-md-4 mb-2">
                 <div className="mb-2">
-                  <span className="fw-bold">Filter by size:
-
-                  </span>
+                  <span className="fw-bold">Filter by size:</span>
                 </div>
                 <select
                   name="size_id"
@@ -114,25 +145,29 @@ const Home = () => {
               </div>
               <div className="col-md-4 mb-2">
                 <div className="mb-2">
-                  <span className="fw-bold">
-                    Search:
-                  </span>
+                  <span className="fw-bold">Search:</span>
                 </div>
-                <form className='d-flex'>
-                  <input type="search" className='form-control me-2' 
-                  value={searchTerm} disabled={selectedColor || selectedSize}
-                  onChange={(e)=>setSearchTerm(e.target.value)}
-                  placeholder='Search....'
+                <form className="d-flex">
+                  <input
+                    type="search"
+                    className="form-control me-2"
+                    value={searchTerm}
+                    disabled={selectedColor || selectedSize}
+                    onChange={e => setSearchTerm(e.target.value)}
+                    placeholder="Search...."
                   />
                 </form>
-                </div>
+              </div>
             </div>
           </div>
         </div>
-        <ProductsList products={products} />
+        {message && products?.length === 0 ? (
+          <div className="alert alert-info">{message}</div>
+        ) : (
+          <ProductsList products={products} />
+        )}
       </div>
     </div>
   );
 };
-
 export default Home;
