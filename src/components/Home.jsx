@@ -70,7 +70,6 @@ const Home = () => {
           }
         } else {
           const response = await axiosRequest.get('products');
-          console.log('blog executed !!!');
           setProducts(response.data.data);
           setColors(response.data.data);
           setSizes(response.data.data);
@@ -173,12 +172,11 @@ const Home = () => {
         </div>
         {message ? (
           <Alert type="primary" content="No Products Found" />
-        ) : 
-        loading
-        ?
-        <Spinner/>:
+        ) : loading ? (
+          <Spinner />
+        ) : (
           <ProductsList products={products} />
-        }
+        )}
       </div>
     </div>
   );
