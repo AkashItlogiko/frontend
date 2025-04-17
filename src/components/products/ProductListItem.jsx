@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const ProductListItem = ({ product }) => {
   return (
     <div className="col-md-4 mb-3">
-      <Link to="" className="text-decoration-none text-dark">
+      <Link to={`/product/$${product.slug}`} className="text-decoration-none text-dark">
         <div className="card shadow-sm h-100">
           <img
             src={product.thumbnail}
@@ -39,7 +39,7 @@ const ProductListItem = ({ product }) => {
               {product.colors?.map(color => (
                 <div
                   key={color.id}
-                  className="border border-secondary border-2"
+                  className="border border-light-subtle border-2"
                   style={{
                     backgroundColor: color.name.toLowerCase(),
                     height: '20px',
