@@ -4,6 +4,7 @@ import { axiosRequest } from '../../helpers/config';
 import Alert from '../layouts/Alert';
 import Spinner from '../layouts/Spinner';
 import { Parser } from 'html-to-react';
+import Slider from './images/Slider';
 
 const Product = () => {
   const [product, setProducts] = useState([]);
@@ -42,7 +43,9 @@ const Product = () => {
         <>
           <div className="row g-0">
             <div className="col-md-4 p-2">
-              <div>Product Image</div>
+              <div>
+                <Slider product={product} />
+              </div>
             </div>
             <div className="col-md-8">
               <div className="card-dody">
