@@ -86,8 +86,22 @@ const Product = () => {
                       borderRadius: '50%',
                       marginRight: '5px',
                     }}
-                  ></div>
+                  >
+
+                  </div>
                 ))}
+              </div>
+            </div>
+            <div className="row mt-5">
+              <div className="col-md-6 mx-auto">
+               <div className="mb-4">
+                <input type="number" className='form-control' placeholder='Qty'
+                value={qty}
+                onChange={(e)=>setQty(e.target.value)}
+                min={1}
+                max={product?.qty >1 ? product?.qty :1}
+                />
+               </div>
               </div>
             </div>
           </div>
