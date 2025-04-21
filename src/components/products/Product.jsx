@@ -80,11 +80,12 @@ const Product = () => {
                   <div
                     key={color.id}
                     onClick={()=>setSelectedColor(color)}
-                    className="border border-light-subtle border-2"
+                    className={`me-1 ${selectedColor?.id === color.id ? 'border border-light-subtle border-2' : ''}`}
                     style={{
                       backgroundColor: color.name.toLowerCase(),
                       height: '20px',
                       width: '20px',
+                      cursor:'pointer',
                       borderRadius: '50%',
                       marginRight: '5px',
                     }}
