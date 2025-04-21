@@ -60,8 +60,9 @@ const Product = () => {
                   {product.sizes?.map(size => (
                     <span
                       key={size.id}
-                      className="bg-light text-dark me-2 p-1 fw-bold"
-                    >
+                      onClick={()=>setSelectedSize(size)}
+                      style={{cursor:'pointer'}}
+                      className="bg-light text-dark me-2 p-1 fw-bold">
                       <small>{size.name}</small>
                     </span>
                   ))}
@@ -78,6 +79,7 @@ const Product = () => {
                 {product.colors?.map(color => (
                   <div
                     key={color.id}
+                    onClick={()=>setSelectedColor(color)}
                     className="border border-light-subtle border-2"
                     style={{
                       backgroundColor: color.name.toLowerCase(),
@@ -91,18 +93,24 @@ const Product = () => {
                   </div>
                 ))}
               </div>
-            </div>
-            <div className="row mt-5">
+              <div className="row mt-5">
               <div className="col-md-6 mx-auto">
                <div className="mb-4">
                 <input type="number" className='form-control' placeholder='Qty'
                 value={qty}
                 onChange={(e)=>setQty(e.target.value)}
                 min={1}
-                max={product?.qty >1 ? product?.qty :1}
+                max={product?.qty > 1 ? product?.qty :1}
                 />
                </div>
               </div>
+              <div className="d-flex justify-content-center">
+                <button className="btn btn-dark" disabled={!selectedColor || !selectedSize || product?.qty == 0}>
+                <i className="bi bi-cart-plus-fill"></i>{""}
+                Add To Cart
+                </button>
+              </div>
+            </div>
             </div>
           </div>
         </>
