@@ -9,8 +9,8 @@ import Slider from './images/Slider';
 const Product = () => {
   const [product, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [selectedColor, setSelectedColor] = useState('');
-  const [selectedSize, setSelectedSize] = useState('');
+  const [selectedColor, setSelectedColor] = useState(null);
+  const [selectedSize, setSelectedSize] = useState(null);
   const [qty, setQty] = useState(1);
   const [error, setError] = useState('');
   const { slug } = useParams();
@@ -62,7 +62,8 @@ const Product = () => {
                       key={size.id}
                       onClick={()=>setSelectedSize(size)}
                       style={{cursor:'pointer'}}
-                      className="bg-light text-dark me-2 p-1 fw-bold">
+                      className={`bg-light text-dark me-2 p-1 fw-bold${selectedSize?.id === size.id ? 'border border-dark-subtle border-2' : ''}`}
+                       >
                       <small>{size.name}</small>
                     </span>
                   ))}
@@ -80,7 +81,7 @@ const Product = () => {
                   <div
                     key={color.id}
                     onClick={()=>setSelectedColor(color)}
-                    className={`me-1 ${selectedColor?.id === color.id ? 'border border-light-subtle border-2' : ''}`}
+                    className={`me-1 ${selectedColor?.id === color.id ? 'border border-dark-subtle border-2' : ''}`}
                     style={{
                       backgroundColor: color.name.toLowerCase(),
                       height: '20px',
@@ -106,7 +107,7 @@ const Product = () => {
                </div>
               </div>
               <div className="d-flex justify-content-center">
-                <button className="btn btn-dark" disabled={!selectedColor || !selectedSize || product?.qty == 0}>
+                <button className="btn btn-dark" disabled={!selectedColor || !selectedSize || product?.qty == 0 || product?.status == 0}>
                 <i className="bi bi-cart-plus-fill"></i>{""}
                 Add To Cart
                 </button>
