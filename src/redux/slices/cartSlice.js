@@ -15,18 +15,21 @@ const cartSlice = createSlice({
     reducers:{
      addToCart(state,action){
         const item = action.payload
-        let productItem= state.cartItems.find(product => product.product_id === item.product.id
-        && product.color === item.color && product.size === item.size 
+        let productItem = state.cartItems.find(product => product.product_id === item.product_id
+                && product.color === item.color && product.size === item.size
     )
             if(productItem){
                 toast.info('Product already added to you cart')
             }else{
                 state.cartItems =[item,...state.cartItems]
+                toast.success('Product added to you cart')
             }
      }
     }
 })
 
 const cartReducer=cartSlice.reducer
+
+export const {addToCart} = cartSlice.actions
 
 export default cartReducer

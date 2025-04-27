@@ -17,7 +17,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <PersistGate persistor={persistor}>
   <div className="container card shadow-sm my-4 ">
     <React.StrictMode>
-      <ToastContainer position="right" />
+      <ToastContainer position="top-right" />
       <App />
     </React.StrictMode>
   </div>
