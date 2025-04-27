@@ -3,14 +3,14 @@ import Alert from '../layouts/Alert';
 import { useSelector } from 'react-redux';
 
 const Cart = () => {
-    const{cartItems}=useSelector(state => state.cart)
+    const{cartItems}=useSelector(state => state.cart);     
     return (
         <div className='row my-4'>
             <div className='col-md-12'>
                <div className='card'>
                 <div className="card-body">
                   {
-                    cartItems.length > 0 ?
+                    cartItems?.length > 0 ?
                     <>
                         <table className="table">
                             <thead>

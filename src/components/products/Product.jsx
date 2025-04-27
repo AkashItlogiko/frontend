@@ -17,7 +17,7 @@ const Product = () => {
   const [qty, setQty] = useState(1);
   const [error, setError] = useState('');
   const { slug } = useParams();
-  const dispatch=useDispatch();
+  const dispatch=useDispatch();  
 
   useEffect(() => {
     const fetachProductBySlug = async () => {
@@ -112,8 +112,7 @@ const Product = () => {
               </div>
               <div className="d-flex justify-content-center">
                 <button className="btn btn-dark" disabled={!selectedColor || !selectedSize || product?.qty == 0 || product?.status == 0} 
-                onClick={()=>{
-                  console.log('Product added to cart')
+                onClick={()=>{                   
                   dispatch(addToCart({     
                     product_id:product.id,
                     name:product.name,
@@ -123,7 +122,7 @@ const Product = () => {
                     color:selectedColor.name,
                     size:selectedSize.name,
                     maxQty:parseInt(product.qty),
-                    image:product.thubnail,
+                    image:product.thumbnail,
                     coupon_id:null,
                 }))
                 setSelectedColor(null)
