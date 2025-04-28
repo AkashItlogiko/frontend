@@ -2,10 +2,12 @@ import React from 'react';
 import Alert from '../layouts/Alert';
 import { useDispatch, useSelector } from 'react-redux';
 import { incrementQ, decrementQ, removeFromCart } from '../../redux/slices/cartSlice';
+import { Link } from 'react-router-dom';
 
 const Cart = () => {
     const{cartItems}=useSelector(state => state.cart);
     const dispatch=useDispatch();
+    const total = cartItems.reduce((acc, item) => acc += item.price * item.qty, 0)
     return (
         <div className='row my-4'>
             <div className='col-md-12'>
@@ -82,11 +84,27 @@ const Cart = () => {
                                } 
                             </tbody>
                         </table>
+                        <div className="d-flex justify-content-center">
+                                        <div className="border border-dark border-3 fw-bold p-2 rounded">
+                                            Total: ${ total }
+                                        </div>
+                                    </div>
                     </>
                     :
                     <Alert content="Your cart is empty" type="primary"/>
                   }  
                 </div>
+                <div className="my-3 d-flex justify-content-end">
+                        <Link to="/" className='btn btn-dark rounded-0 mx-2'>
+                            Continue Shopping
+                        </Link>
+                        {
+                            cartItems.length > 0  && 
+                            <Link to="/checkout" className='btn btn-danger rounded-0 mx-2'>
+                                Checkout
+                            </Link>
+                        }
+                    </div>
                </div>
             </div>
         </div>
