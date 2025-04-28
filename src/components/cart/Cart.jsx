@@ -1,9 +1,11 @@
 import React from 'react';
 import Alert from '../layouts/Alert';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { incrementQ, decrementQ, removeFromCart } from '../../redux/slices/cartSlice';
 
 const Cart = () => {
-    const{cartItems}=useSelector(state => state.cart);     
+    const{cartItems}=useSelector(state => state.cart);
+    const dispatch=useDispatch();
     return (
         <div className='row my-4'>
             <div className='col-md-12'>
@@ -23,6 +25,7 @@ const Cart = () => {
                                 <th>Color</th>
                                 <th>Size</th>
                                 <th>Subtotal</th>
+                                <th>Delete</th>
                                 <th></th>      
                                </tr>                             
                             </thead>
@@ -37,12 +40,43 @@ const Cart = () => {
                                      className='img-fluid rounded'/>
                                 </td>
                                 <td>{item?.name}</td>
-                                <td>{item?.qty}</td>
-                                <td>{item?.price}</td>
-                                <td>{item?.color}</td>
-                                <td>{item?.size}</td>
-                                <td>{item?.qty * item?.price}</td>
-                                <td></td> 
+                                <td>
+                                  <i className="bi bi-caret-up"
+                                  onClick={() => dispatch(incrementQ(item))}
+                                  style={{cursor:"pointer"}}></i>
+                                  <span className="mx-2">
+                                     {item?.qty}
+                                  </span>
+                                  <i className="bi bi-caret-down"
+                                  onClick={() => dispatch(decrementQ(item))}
+                                   style={{cursor:"pointer"}}></i>
+                                 </td>
+
+                                <td>${item?.price}</td>
+                                <td>
+                                  <div
+                                  className="border border-light-subtle border-2"
+                                  style={{
+                                    backgroundColor: item?.color.toLowerCase(),
+                                    height: '20px',
+                                    width: '20px',
+                                    borderRadius: '50%',
+                                    marginRight: '5px',
+                                  }}
+                                ></div>
+
+                                </td>
+                                <td>
+                                <span className="bg-light text-dark me-2 p-1 fw-bold">                 
+                                <small>{item?.size}</small>
+                              </span>
+                                </td>
+                                <td>${item?.qty * item?.price}</td>
+                                <td>
+                                   <i className="bi bi-trash "
+                                  onClick={() => dispatch(removeFromCart(item))}
+                                  style={{cursor:"pointer"}}></i>
+                                </td> 
                                   </tr>
                                 ))
                                } 
