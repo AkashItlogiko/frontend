@@ -5,7 +5,7 @@ const Checkout = () => {
   const{cartItems}=useSelector((state)=>state.cart);
 
     return (
-        <div className="card">
+        <div className="card mb-4">
             <div className="card-body">
                 <div className="row my-5">
                     <div className="col-md-7">
@@ -49,9 +49,17 @@ const Checkout = () => {
                                 <span className="fw-normal text-danger">
                                     SUMMER VIBES <i className="bi bi-trash"></i>
                                 </span>
-                                <span className="fw-bold">
-                                    Discount (10)%
+                                <span className="fw-bold text-danger">
+                                   -$32
                                 </span>
+                            </li>
+                            <li className="list-group-item d-flex justify-content-between">
+                               <span className='fw-bold'>
+                                  Total
+                                </span> 
+                                <span className='fw-bold'>
+                                    $200
+                                </span> 
                             </li>
                         </ul>
                     </div>
