@@ -28,6 +28,16 @@ const Header = () => {
             </Link>
           </li>
           <li className="nav-item">
+            <Link className="nav-link active" aria-current="page" to="/register">
+              <i className="bi bi-user-plus"></i> Register
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link active" aria-current="page" to="/login">
+              <i className="bi bi-box-arrow-in-right"></i> Login
+            </Link>
+          </li>
+          <li className="nav-item">
             <Link className="nav-link" to="/cart">
               <i className="bi bi-bag"></i> Cart({cartItems.length})
             </Link>
