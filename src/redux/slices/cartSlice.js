@@ -51,12 +51,23 @@ const cartSlice = createSlice({
         state.cartItems = state.cartItems.filter(product => product.ref !== item.ref )
         toast.warning('Product removed from your cart')
     },
-
+    setValidCoupon(state,action){
+        state.validCoupon = action.payload
+    },
+    addCouponIdToCartItem(state,action){
+        const coupon_id = action.payload
+        state.cartItems = state.cartItems.map(item => {
+            return {...item, coupon_id}
+        })
+    },
+    clearCartItems(state,action){
+        state.cartItems = []
+    }
     }
 })
 
 const cartReducer=cartSlice.reducer
 
-export const {addToCart, incrementQ, decrementQ, removeFromCart} = cartSlice.actions
+export const {addToCart, incrementQ, decrementQ, removeFromCart,setValidCoupon,addCouponIdToCartItem,clearCartItems} = cartSlice.actions
 
 export default cartReducer

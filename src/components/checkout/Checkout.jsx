@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import Coupon from '../coupons/Coupon';
 
 const Checkout = () => {
   const{cartItems}=useSelector((state)=>state.cart);
@@ -12,7 +13,7 @@ const Checkout = () => {
                         {/* user informations */}
                     </div>
                     <div className="col-md-4">
-                        {/* coupon */}
+                        <Coupon/>
                         <ul className="list-group">
                             {
                              cartItems.map(item =>(
