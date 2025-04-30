@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { axiosRequest } from '../../helpers/config';
 import { toast } from 'react-toastify';
 import Spinner from '../layouts/Spinner';
 import useValidations from '../custom/useValidations';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCurrentUser, setLoggedInOut, setToken } from '../../redux/slices/userSlice';
 
 const Login = () => {
+    const { isLoggedIn } = useSelector(state => state.user)
     const [user, setUser] = useState({
         email: '',
         password: ''
@@ -13,7 +16,12 @@ const Login = () => {
     const [validationErrors, setValidationErrors] = useState([])
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate()
+    const dispatch=useDispatch()
     
+    useEffect(() => {
+        if(isLoggedIn) navigate('/')
+    },[isLoggedIn])
+
     const loginUser = async (e) => {
         e.preventDefault()  
         setValidationErrors([])
@@ -24,6 +32,9 @@ const Login = () => {
            if(response.data.error){
             toast.error(response.data.error)
            }else{
+            dispatch(setCurrentUser(response.data.user))
+            dispatch(setToken(response.data.access_token))
+            dispatch(setLoggedInOut(true))
             toast.success(response.data.message)
             navigate('/')
            }
