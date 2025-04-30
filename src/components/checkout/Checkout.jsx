@@ -1,9 +1,31 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Coupon from '../coupons/Coupon';
+import { toast } from 'react-toastify';
+import { setValidCoupon } from '../../redux/slices/cartSlice';
 
 const Checkout = () => {
-  const{cartItems}=useSelector((state)=>state.cart);
+//   const { user, isLoggedIn } = useSelector(state => state.user)
+  const { cartItems, validCoupon } = useSelector(state => state.cart)
+  const totalOfCartItems  = cartItems.reduce((acc, item) => acc += item.price * item.qty, 0)
+  const dispatch = useDispatch()
+
+  const calculateDiscount = () => {
+    return validCoupon?.discount && totalOfCartItems * validCoupon?.discount / 100
+}
+
+const totalAfterDiscount = () => {
+    return totalOfCartItems - calculateDiscount()
+}
+
+const removeCoupon = () => {
+    dispatch(setValidCoupon({
+        name: '',
+        discount: 0
+    }))
+    dispatch(addCouponIdToCartItem(null))
+    toast.success('Coupon removed')
+}
 
     return (
         <div className="card mb-4">
@@ -45,13 +67,16 @@ const Checkout = () => {
                             }
                              <li className="list-group-item d-flex justify-content-between">
                                 <span className="fw-bold">
-                                    Discount (10)%
+                                    Discount ({validCoupon?.discount})%
                                 </span>
                                 <span className="fw-normal text-danger">
-                                    SUMMER VIBES <i className="bi bi-trash"></i>
+                                   {validCoupon?.name}  <i className="bi bi-trash"
+                                     style={{cursor:'pointer'}}
+                                     onClick={()=>removeCoupon()}
+                                   ></i>
                                 </span>
                                 <span className="fw-bold text-danger">
-                                   -$32
+                                   -${calculateDiscount()}
                                 </span>
                             </li>
                             <li className="list-group-item d-flex justify-content-between">
@@ -59,7 +84,7 @@ const Checkout = () => {
                                   Total
                                 </span> 
                                 <span className='fw-bold'>
-                                    $200
+                                    ${totalAfterDiscount()}
                                 </span> 
                             </li>
                         </ul>
