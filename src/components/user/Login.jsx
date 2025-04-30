@@ -3,17 +3,20 @@ import { useNavigate } from 'react-router-dom';
 import { axiosRequest } from '../../helpers/config';
 import { toast } from 'react-toastify';
 import Spinner from '../layouts/Spinner';
+import useValidations from '../custom/useValidations';
 
 const Login = () => {
     const [user, setUser] = useState({
         email: '',
         password: ''
     })
+    const [validationErrors, setValidationErrors] = useState([])
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate()
     
     const loginUser = async (e) => {
         e.preventDefault()  
+        setValidationErrors([])
         setLoading(true)
         try {
             const response = await axiosRequest.post('user/login', user)
@@ -25,6 +28,9 @@ const Login = () => {
             navigate('/')
            }
         } catch (error) {
+            if(error?.response?.status === 422) {
+                setValidationErrors(error.response.data.errors)
+            }
             console.log(error)
             setLoading(false)
         }
@@ -44,22 +50,23 @@ const Login = () => {
                     <form className="mt-5" onSubmit={(e) => loginUser(e)}>                                         
                         <div className="mb-3">
                             <label htmlFor="eamil" className="form-label">Email address</label>
-                            <input type="email"
+                            <input type="email" placeholder="Enter your email"
                                value={user.email}
                                onChange={(e) => setUser({
                                         ...user, email: e.target.value
                                     })}    
                                 className="form-control" id="eamil"/> 
-                            <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
+                             {useValidations(validationErrors,'email')}
                         </div>
                         <div className="mb-3">
                             <label htmlFor="password" className="form-label">Password</label>
-                            <input type="password" 
+                            <input type="password" placeholder="Enter your password"
                             value={user.password}
                             onChange={(e) => setUser({
                                 ...user, password: e.target.value
                             })}
                             className="form-control" id="password"/>
+                            {useValidations(validationErrors,'password')}
                         </div>
                         
                         {
