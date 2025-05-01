@@ -2,10 +2,12 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Coupon from '../coupons/Coupon';
 import { toast } from 'react-toastify';
-import { setValidCoupon } from '../../redux/slices/cartSlice';
+import { addCouponIdToCartItem, setValidCoupon } from '../../redux/slices/cartSlice';
+import { Link } from 'react-router-dom';
+import Alert from '../layouts/Alert';
 
 const Checkout = () => {
-//   const { user, isLoggedIn } = useSelector(state => state.user)
+  const { user } = useSelector(state => state.user)
   const { cartItems, validCoupon } = useSelector(state => state.cart)
   const totalOfCartItems  = cartItems.reduce((acc, item) => acc += item.price * item.qty, 0)
   const dispatch = useDispatch()
@@ -69,12 +71,14 @@ const removeCoupon = () => {
                                 <span className="fw-bold">
                                     Discount ({validCoupon?.discount})%
                                 </span>
-                                <span className="fw-normal text-danger">
-                                   {validCoupon?.name}  <i className="bi bi-trash"
-                                     style={{cursor:'pointer'}}
-                                     onClick={()=>removeCoupon()}
-                                   ></i>
-                                </span>
+                                {
+                                    validCoupon?.name && <span className="fw-normal text-danger">
+                                    {validCoupon?.name}  <i className="bi bi-trash"
+                                      style={{cursor:'pointer'}}
+                                      onClick={()=>removeCoupon()}
+                                    ></i>
+                                 </span>
+                                }
                                 <span className="fw-bold text-danger">
                                    -${calculateDiscount()}
                                 </span>
@@ -88,6 +92,15 @@ const removeCoupon = () => {
                                 </span> 
                             </li>
                         </ul>
+                        <div className="my-3">
+                            {
+                              user?.completed_profile ?
+                              <Link to="/" className='btn btn-primary rounded-0 ' />
+                              : <Alert content="Add you billing details"
+                              type="warning"
+                              />
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
