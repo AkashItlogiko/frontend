@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import useValidations from '../../custom/useValidations';
@@ -12,6 +12,8 @@ const ProfileSidebar = () => {
     const [validationErrors, setValidationErrors] = useState([])
     const [loading, setLoading] = useState(false)
     const dispatch = useDispatch()
+    const fileInput = useRef()
+
     
     const updateProfileImage = async() => {
      setValidationErrors([])
@@ -25,7 +27,7 @@ const ProfileSidebar = () => {
         dispatch(setCurrentUser(response.data.user))
         setImage('')
         setLoading(false)
-        // fileInput.current.value = ''
+        fileInput.current.value = ''
         toast.success(response.data.message)  
      } catch(error){
         if(error?.response?.status === 422) {
@@ -47,7 +49,7 @@ const ProfileSidebar = () => {
                     />
                <div className="input-group my-3">
                         <input type="file" accept='image/*' 
-                            
+                            ref={fileInput}
                             onChange={(e) => setImage(e.target.files[0])}
                             className='form-control'
                         />
