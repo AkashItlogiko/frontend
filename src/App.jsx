@@ -6,6 +6,7 @@ import Cart from './components/cart/Cart';
 import Checkout from './components/checkout/Checkout';
 import Login from './components/user/Login';
 import Register from './components/user/Register';
+import Profile from './components/user/Profile';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/checkout" element={<Checkout/>}/>
         <Route path="/register" element={<Register/>}/>
         <Route path="/login" element={<Login/>}/>
+        <Route path='/profile' element={<Profile/> }/>
       </Routes>
     </BrowserRouter>
   );

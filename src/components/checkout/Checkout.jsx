@@ -96,7 +96,7 @@ const removeCoupon = () => {
                             {
                               user?.completed_profile ?
                               <Link to="/" className='btn btn-primary rounded-0 ' />
-                              : <Alert content="Add you billing details"
+                              : <Alert content="Add your billing details"
                               type="warning"
                               />
                             }

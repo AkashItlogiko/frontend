@@ -13,7 +13,7 @@ const Coupon = () => {
 
     const applyCoupon = async()=>{
     try{
-        const response = await axiosRequest.post('apply/coupon', coupon, 
+        const response = await axiosRequest.post('/apply/coupon', coupon, 
             getConfig(token))
             if(response.data.error) {
                 toast.error(response.data.error)
