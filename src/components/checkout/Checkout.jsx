@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { addCouponIdToCartItem, setValidCoupon } from '../../redux/slices/cartSlice';
 import { Link } from 'react-router-dom';
 import Alert from '../layouts/Alert';
+import UpdateUserInfos from '../user/UpdateUserInfos';
 
 const Checkout = () => {
   const { user } = useSelector(state => state.user)
@@ -33,8 +34,8 @@ const removeCoupon = () => {
         <div className="card mb-4">
             <div className="card-body">
                 <div className="row my-5">
-                    <div className="col-md-7">
-                        {/* user informations */}
+                    <div className="col-md-8">
+                       <UpdateUserInfos profile={false}/>
                     </div>
                     <div className="col-md-4">
                         <Coupon/>
@@ -94,8 +95,12 @@ const removeCoupon = () => {
                         </ul>
                         <div className="my-3">
                             {
-                              user?.completed_profile ?
-                              <Link to="/" className='btn btn-primary rounded-0 ' />
+                              user?.profile_completed ?
+                              <Link to="/" className='btn btn-primary rounded-0 '>
+                              
+                              Proceed to payment
+                                    </Link>
+                              
                               : <Alert content="Add your billing details"
                               type="warning"
                               />
