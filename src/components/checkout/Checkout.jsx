@@ -1,17 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Coupon from '../coupons/Coupon';
 import { toast } from 'react-toastify';
 import { addCouponIdToCartItem, setValidCoupon } from '../../redux/slices/cartSlice';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Alert from '../layouts/Alert';
 import UpdateUserInfos from '../user/UpdateUserInfos';
 
 const Checkout = () => {
-  const { user } = useSelector(state => state.user)
+  const { user,isLoggedIn} = useSelector(state => state.user)
   const { cartItems, validCoupon } = useSelector(state => state.cart)
   const totalOfCartItems  = cartItems.reduce((acc, item) => acc += item.price * item.qty, 0)
   const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+      useEffect(() => {
+          if(!isLoggedIn) navigate('/login')
+      },[isLoggedIn])
 
   const calculateDiscount = () => {
     return validCoupon?.discount && totalOfCartItems * validCoupon?.discount / 100
