@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import useValidations from '../../custom/useValidations';
+import { axiosRequest, getConfig } from '../../../helpers/config';
+import { setCurrentUser } from '../../../redux/slices/userSlice';
+import { toast } from 'react-toastify';
 
 const ProfileSidebar = () => {
     const { user, token } = useSelector (state => state.user)
@@ -11,7 +14,26 @@ const ProfileSidebar = () => {
     const dispatch = useDispatch()
     
     const updateProfileImage = async() => {
-
+     setValidationErrors([])
+     setLoading(true)
+     const formData = new FormData()
+     formData.append('profile_image',image)
+     formData.append('_method', 'PUT')
+     try{
+        const response = await axiosRequest.post('user/profile/update', 
+            formData,getConfig(token,'multipart/form-data'))
+        dispatch(setCurrentUser(response.data.user))
+        setImage('')
+        setLoading(false)
+        // fileInput.current.value = ''
+        toast.success(response.data.message)  
+     } catch(error){
+        if(error?.response?.status === 422) {
+            setValidationErrors(error.response.data.errors)
+        }
+        console.log(error)
+        setLoading(false)
+     }
     }
 
     return (
