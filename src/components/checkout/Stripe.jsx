@@ -9,8 +9,8 @@ import { useSelector } from 'react-redux'
  
 
 export default function Stripe( ) {
-    // const stripePromise = loadStripe('pk_test_51RKgIZP09DJXxWk8rSyCZwQWx3N8ci8drdx2MqZ02QEr48lgIL1ggHL2tIwUgOvXSm1CB3bCSL3eEx3sdpSVcBx6006dhqDReB')
-    const stripePromise = loadStripe('psk')
+  
+    const stripePromise = loadStripe("YOUR PUBLISHABLE KEY")
     const [clientSecret, setClientSecret] = useState("")
     const { token } = useSelector(state => state.user)
     const { cartItems } = useSelector(state => state.cart)
