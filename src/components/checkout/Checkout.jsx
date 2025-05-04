@@ -101,7 +101,7 @@ const removeCoupon = () => {
                         <div className="my-3">
                             {
                               user?.profile_completed ?
-                              <Link to="/" className='btn btn-primary rounded-0 '>
+                              <Link to="/pay/order" className='btn btn-primary rounded-0 '>
                               
                               Proceed to payment
                                     </Link>
