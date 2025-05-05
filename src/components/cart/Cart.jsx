@@ -37,9 +37,9 @@ const Cart = () => {
                                   <tr key={index}>
                                      <td>{index += 1}</td>
                                 <td>
-                                    <img src={item?.image} 
-                                    width={60} height={60}
-                                     className='img-fluid rounded'/>
+                                      <img src={item?.image} 
+                                      width={60} height={60}
+                                      className='img-fluid rounded'/>
                                 </td>
                                 <td>{item?.name}</td>
                                 <td>
