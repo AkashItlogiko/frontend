@@ -7,6 +7,7 @@ import { Parser } from 'html-to-react';
 import Slider from './images/Slider';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../../redux/slices/cartSlice';
+import Reviews from '../reviews/Reviews';
 
 
 const Product = () => {
@@ -150,6 +151,23 @@ const Product = () => {
             </div>
             </div>
           </div>
+          <div className="row my-4">
+                        <div className="col-md-8 mx-auto">
+                            <div className="card">
+                                <div className="card-header bg-white text-center">
+                                    <h5 className="mt-2">
+                                        Reviews ({product?.reviews?.length})
+                                    </h5>
+                                </div>
+                                <div className="card-body">
+                                    <Reviews 
+                                        product={product}
+                                        setLoading={setLoading}
+                                    />
+                                </div>
+                            </div>
+                        </div>                   
+                    </div>
         </>
       )}
     </div>

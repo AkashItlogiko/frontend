@@ -35,9 +35,7 @@ export default function CheckoutForm() {
             }))
             dispatch(setCurrentUser(response.data.user))
             setIsProcessing(false)
-            toast.success('Payment done successfully');
-            navigate('/user/orders');
-
+            toast.success('Payment done successfully')
           } catch (error) {
               console.log(error)
               setIsProcessing(false)
