@@ -69,7 +69,7 @@ export default function AddUpdateReview() {
                     <div className="card-body">
                         <form className="mt-5" onSubmit={(e) => updating ? updateReview(e) : addReview(e)}>
                             <div className="mb-3">
-                                <label htmlFor="title" className="form-label">Title*</label>
+                                <label htmlFor="title" className="form-label">Title</label>
                                 <input type="text"
                                     value={review.title}
                                     onChange={(e) => setReview({
@@ -80,7 +80,7 @@ export default function AddUpdateReview() {
                                     className="form-control" id="title"/>
                             </div>
                             <div className="mb-3">
-                                <label htmlFor="body" className="form-label">Review*</label>
+                                <label htmlFor="body" className="form-label">Review</label>
                                 <textarea name="body" rows="5"
                                     id="body"
                                     value={review.body}
